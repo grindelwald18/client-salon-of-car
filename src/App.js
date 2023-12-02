@@ -1,9 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
+import BrandsTable from './components/BrandsTable';
 
 function App() {
   return (
-    <p>priv</p>
+    <BrandsTable />
   );
 }
 
