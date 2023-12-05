@@ -1,40 +1,59 @@
-import React from 'react';
-import brandsService from '../services/BrandsService';
-import {Table, Button} from 'antd';
+
+import React, {useEffect, useState} from 'react';
+import brandService from '../services/BrandsService';
+import {Table, Empty, Button, Form, Input, Modal, Spin} from 'antd';
+import {toast} from 'react-toastify';
+
 
 export default function BrandsTable() {
 
-    // const data = brandsService.getBrands();
-    const data = [
-        {
-            id: 1, 
-            brand: 1
-        },
-        {
-            id: 2,
-            brand: 2
-        }
-    ]
+    const [brands, setBrands] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [form] = Form.useForm();
 
-    const columns = [
+    useEffect(() => {
+        (async function getBrands() {
+            try {
+                const data = await brandService.getBrands();
+                setBrands(data);
+                setIsLoading(false);
+                console.log(data);
+            } catch (error) {
+                setIsLoading(false);
+            }
+        })();
+    }, []);
+
+
+
+const columns = [
         {
-            'title': 'id',
-            'dataIndex': 'id',
-            'key': 'id'
+            title: 'id',
+            dataIndex: 'id',
+            key: 'id',
         },
         {
-            'title': 'brand',
-            'dataIndex': 'brand',
-            'key': 'brand'
-        }
-    ]
+            title: 'Бренд',
+            dataIndex: 'brand',
+            key: 'brand',
+        },
+       
+    ];
 
     return (
         <>
-            <p>table</p>
-            <Table dataSource={data} columns={columns} />
-            <Button>priv</Button>
+       
+
+            {isLoading ? (
+                <Spin/>
+            ) : brands.length > 0 ? (
+                <Table dataSource={brands} columns={columns} pagination={false}/>
+            ) : (
+                <Empty description="Список брендов пуст"/>
+            )}
+
+           
         </>
-    )
+    );
 
 }
