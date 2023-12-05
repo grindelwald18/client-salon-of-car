@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-class BrandsService {
+class ModelService {
 
-    async getBrands() {
+    async getModels() {
         try {
-            const response = await axios.get('http://localhost:8080/car');
+            const response = await axios.get('http://localhost:8080/model');
             return response.data;
         } catch (error) {
             // console.log(error);
@@ -12,4 +12,4 @@ class BrandsService {
         }
     }
 }
-export default new BrandsService();
+export default new ModelService();

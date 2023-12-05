@@ -19,15 +19,16 @@ export default function StartPage() {
         })();
     }, []);
 
+    
     const onClickButton = () => {
-        
+
         alert('Кнопка нажата');
     }
 
 
     return (
         <>
-            <Select>
+            <Select className='select'> 
                 {
                     brands.map(brand => (
                         <Option key={brand.id} value={brand.id}>
@@ -35,7 +36,6 @@ export default function StartPage() {
                         </Option>
                     ))
                 }
-
             </Select>
                
 
