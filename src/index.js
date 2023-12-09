@@ -6,14 +6,16 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import BrandsPage from './pages/BrandsPage';
 import StartPage from './pages/StartPage';
+import BasketPage from './pages/BasketPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-      <Route path='/' Component={StartPage}/>
+        <Route path='/' Component={StartPage}/>
         <Route path='/brands' Component={BrandsPage}/>
+        <Route path='/basket' Component={BasketPage}/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
