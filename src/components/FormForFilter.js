@@ -2,7 +2,7 @@
 import React, {useEffect, useState} from 'react';
 import brandService from '../services/BrandsService';
 import modelService from '../services/ModelService';
-import {Button, Form , Select, message, InputNumber, DatePicker} from 'antd';
+import {Button, Form , Select, message, InputNumber, DatePicker, Empty, Card } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import '../css/index.css';
 const { Option } = Select;
@@ -13,23 +13,23 @@ export default function FormForFilter({onFilter}) {
     const [brands, setBrands] = useState([]);
     const [models, setModels] = useState([]);
     const [form] = Form.useForm();
-
     const navigate  = useNavigate();
+
 
     useEffect(() => {
         (async function getBrands() {
             try {
+                
                 const data = await brandService.getBrands();
                 setBrands(data);
+
             } catch (error) {
                 console.log(error)
             }
         })();
     }, []);
 
-    const goToNextPage =()=>{
-        navigate('/brands')
-    }
+
     const chooseBrand = async (brand) => {
         try {
             const data = await modelService.getModelsByBrandId(brand);
@@ -46,13 +46,21 @@ export default function FormForFilter({onFilter}) {
             console.log(year);
             // Дальнейшая обработка года, например, сохранение в состояние компонента
             form.setFieldValue({productionYear:date});
-          }
+        }
+        else {
+        // Значение по умолчанию
+        const defaultYear = 2000;
+    
+        // Дальнейшая обработка значения по умолчанию
+        form.setFieldValue({ productionYear: defaultYear });
+    }
     }
 
     const disabledDate=(data)=>{
         return data.year()>2024 || data.year()<2000;
     }
     
+
     
     const onClickButton = (value) => {
         onFilter(value);
@@ -60,8 +68,8 @@ export default function FormForFilter({onFilter}) {
 
     return (
         <Form form={form} onFinish={onClickButton} className='form'>
-
-                <div className='brand selectForm' >
+            <div className='formWrap'>
+                <div className='brand selectForm'>
                     <h3>Бренд</h3>
                     <Form.Item name="selectBrand" >
                         <Select className='select' onChange={chooseBrand}>
@@ -108,10 +116,8 @@ export default function FormForFilter({onFilter}) {
                         <DatePicker onChange={handelPrpductionYear} rules={[{required:false}]} picker="year" disabledDate={disabledDate} format="YYYY"/>
                     </Form.Item>
                 </div>   
-
-
                 <Button type="primary" htmlType="submit" className='buttonForm'>Найти</Button>
-                <Button onClick={goToNextPage} >Кликни</Button>
+                </div>
             </Form>
  
     );

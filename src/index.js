@@ -7,12 +7,14 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import BrandsPage from './pages/BrandsPage';
 import StartPage from './pages/StartPage';
 import BasketPage from './pages/BasketPage';
+import AuthPage from './pages/AuthPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
+        <Route path='/auth' Component={AuthPage}/>
         <Route path='/' Component={StartPage}/>
         <Route path='/brands' Component={BrandsPage}/>
         <Route path='/basket' Component={BasketPage}/>
