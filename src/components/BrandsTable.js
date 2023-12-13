@@ -37,6 +37,7 @@ const columns = [
             dataIndex: 'brand',
             key: 'brand',
         },
+        
        
     ];
 
@@ -48,6 +49,7 @@ const columns = [
                 <Spin/>
             ) : brands.length > 0 ? (
                 <Table dataSource={brands} columns={columns} pagination={false}/>
+                
             ) : (
                 <Empty description="Список брендов пуст"/>
             )}

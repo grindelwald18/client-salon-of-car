@@ -14,6 +14,24 @@ class CarsService {
             throw error;
         }
     }
+
+    async getImg(value) {
+        try {
+            console.log(value);
+           
+            const response = await axios.get('http://localhost:8080/car/img/'+value, {
+                      responseType: 'blob',
+                    });
+            console.log(response);
+            return response.data;
+        } catch (error) {
+            // console.log(error);
+            throw error;
+        }
+    }
+    
+
+
     
     async filtr(value) {
         try {
@@ -24,7 +42,7 @@ class CarsService {
                     modelId: value.selectModel,
                     minAmount: value.minAmount,
                     maxAmount: value.maxAmount,
-                    productionYear: value.productionYear.year()
+                    productionYear: value.productionYear.year() || 2000
                 }
             }
             else{
@@ -45,5 +63,17 @@ class CarsService {
             throw error;
         }
     }
+
+
+    async SetSoldCar(carId) {
+        try {
+            const response = await axios.put(`http://localhost:8080/car/selled/${carId}`);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+
 }
 export default new CarsService();

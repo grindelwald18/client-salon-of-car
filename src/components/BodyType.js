@@ -37,7 +37,7 @@ export default function BodyType({ onSelectBodyType }) {
     return (
 
         <div className='bodyTypeWrap'>
-            {bodyTypes.length > 0 && bodyTypes.map((bodyType) => (
+            {bodyTypes.length > 0 && bodyTypes.map((bodyType)  => (
                 <button
                     className={`bodyTypeCard ${selectedBodyType === bodyType.id ? 'selected' : ''}`}
                     key={bodyType.id}

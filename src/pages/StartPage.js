@@ -5,7 +5,9 @@ import BodyType from '../components/BodyType';
 import Header from '../components/Header';
 import carService from '../services/CarServise';
 import basketService from '../services/BasketService';
+import Footer from '../components/Footer';
 import userService from '../services/UserService';
+
 import "../css/index.css";
 import { Card } from 'antd';
 const { Meta } = Card;
@@ -16,21 +18,21 @@ export default function StartPage() {
     const [filteredCars, setFilteredCars] = useState([]);
     const [isQueryComplete, setIsQueryComplete] = useState(false); // Добавлено новое состояние
 
-    // const filtait = (value) => {
-    //     setIsQueryComplete(false); // Сброс флага перед выполнением запроса
-    
-    //     if (value && value.selectBrand) { // Проверка наличия свойства 'selectBrand'
-    //         carService.filtr(value)
-    //             .then(cars => {
-    //                 setCars(cars);
-    //                 setIsQueryComplete(true); // Установка флага после получения ответа
-    //                 console.log(cars);
-    //             });
-    //     } else {
-    //         // Обработка случая, когда свойство 'selectBrand' отсутствует
-    //         console.log("Ошибка: свойство 'selectBrand' отсутствует в объекте value");
-    //     }
-    // }
+    const ImageSearch=({imageName})=>{
+        const [img, setImg] = useState("");
+
+        useEffect(() => {
+            carService.getImg(imageName)
+                .then((data) => {
+                    setImg(URL.createObjectURL(data));
+                })
+                .catch((error) => {
+                    console.error('Error fetching item image:', error);
+                });
+        }, [imageName]);
+        return (<img className="searchImg" src={img}/>)
+    }
+
     const filtait = (value) => {
         setIsQueryComplete(false); // Сброс флага перед выполнением запроса
     
@@ -60,6 +62,7 @@ export default function StartPage() {
 
     const addCartoBasket = (carId)=>{
        basketService.addCarBasket(carId);
+       message.success('Машина добавлена в карзину');
     }
 
     useEffect(() => {
@@ -88,13 +91,13 @@ export default function StartPage() {
                                     style={{
                                         width: 240,
                                     }}
-                                    cover={<img alt="example" src="#" className='imgCard'/>}
+                                    cover={<ImageSearch imageName={car.img} />}
                                 >
                                     <Meta className="cardModelAndBrend" title={`${car.model.brand.brand} ${car.model.model}`} />
-                                    <Meta title={`Цена: ${car.amount}$`} />
-                                    <Meta title={`Пробег: ${car.mileage}км`} />
-                                    <Meta title={`Год выпуска: ${car.productionYear}`} />
-                                    <Meta title={`Тип кузова: ${car.bodyType.bodyType}`} />
+                                    <Meta className="cardInf" title={`Цена: ${car.amount}$`} />
+                                    <Meta className="cardInf" title={`Пробег: ${car.mileage}км`} />
+                                    <Meta className="cardInf" title={`Год выпуска: ${car.productionYear}`} />
+                                    <Meta  className="cardInf"title={`Тип кузова: ${car.bodyType.bodyType}`} />
                                     <Button type="primary" className='button' onClick={() => addCartoBasket(car.id)}>Добавить в корзину</Button>
                                 </Card>
                             ))
@@ -102,6 +105,7 @@ export default function StartPage() {
                     </div>
                 </div>
             </section>
+            <Footer/>
         </>
     )
 }

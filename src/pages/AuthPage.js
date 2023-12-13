@@ -8,6 +8,7 @@ export default function BrandsPage() {
         <>
         {/* <h1></h1> */}
             <Auth />
+            
         </>
     )
 
