@@ -1,15 +1,66 @@
 import axios from 'axios';
 
-class BrandsService {
+class BrandService {
 
-    async getBrands() {
+    async fetchBrands() {
         try {
-            const response = await axios.get('http://localhost:8080/brand');
+            const response = await axios.get('http://localhost:8080/brand')
+            return response.data;
+            // const token = JSON.parse(localStorage.getItem('jwtToken'))
+            // const requestOptions = {
+            //     method: 'GET',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'Authorization': `Bearer ${token}`
+            //     },
+            // };
+            //
+            // fetch('http://localhost:8080/brands', requestOptions)
+            //     .then(response => {
+            //         if (!response.ok) {
+            //             throw new Error('Error sending request');
+            //         }
+            //         return response.json();
+            //     })
+            //     .then(data => {
+            //         return data;
+            //     })
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async setHeaders() {
+        const token = JSON.parse(localStorage.getItem('jwtToken'))
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    }
+
+    async deleteBrand(id) {
+        try {
+            const response = await axios.delete(`http://localhost:8080/brand/${id}`);
             return response.data;
         } catch (error) {
-            // console.log(error);
+            throw error;
+        }
+    }
+
+    async updateBrand(brand) {
+        try {
+            const response = await axios.put(`http://localhost:8080/brand/${brand.id}`, brand);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async saveBrand(brand) {
+        try {
+            const response = await axios.post(`http://localhost:8080/brand/add`, brand);
+            return response.data;
+        } catch (error) {
             throw error;
         }
     }
 }
-export default new BrandsService();
+
+export default new BrandService();
