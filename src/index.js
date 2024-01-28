@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import BrandsPage from './pages/BrandsPage';
+import ModelsPage from './pages/ModelsPage';
 import StartPage from './pages/StartPage';
 import BasketPage from './pages/BasketPage';
 import AuthPage from './pages/AuthPage';
@@ -23,6 +24,7 @@ root.render(
         <Route path='/auth' element={<AuthPage />} />
         <Route path='/' element={<StartPage />} />
         <Route path='/brands' element={<BrandsPage />} />
+        <Route path='/models' element={<ModelsPage />} />
         <Route path='/basket' element={<BasketPage />} />
         <Route path='/about-us' element={<AboutUs />} />
         <Route path='/contract/user' element={<UserContractPage />} />
